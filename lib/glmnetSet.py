@@ -224,7 +224,7 @@ def glmnetSet(opts = None):
         print(optsInOptions, ' : unknown option for glmnetSet')
         raise ValueError('attempting to set glmnet options that are not known to glmnetSet')
     else:        
-        options = {**options, **opts}   # update values
+        options.update(opts)            # update values
     
     return options
 
