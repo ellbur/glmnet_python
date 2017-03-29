@@ -7,7 +7,7 @@ Internal function called by glmnet. See also glmnet, cvglmnet
 # import packages/methods
 import scipy
 import ctypes
-from loadGlmLib import loadGlmLib
+from .loadGlmLib import loadGlmLib
     
 def elnet(x, is_sparse, irs, pcs, y, weights, offset, gtype, parm, lempty, 
           nvars, jd, vp, cl, ne, nx, nlam, flmin, ulam, thresh, isd, intr, 

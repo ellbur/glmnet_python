@@ -195,15 +195,15 @@ OUTPUT ARGUMENTS:
 """
 import joblib
 import multiprocessing
-from glmnetSet import glmnetSet
-from glmnetPredict import glmnetPredict
+from .glmnetSet import glmnetSet
+from .glmnetPredict import glmnetPredict
 import scipy
-from glmnet import glmnet
-from cvelnet import cvelnet
-from cvlognet import cvlognet
-from cvmultnet import cvmultnet
-from cvmrelnet import cvmrelnet
-from cvfishnet import cvfishnet
+from .glmnet import glmnet
+from .cvelnet import cvelnet
+from .cvlognet import cvlognet
+from .cvmultnet import cvmultnet
+from .cvmrelnet import cvmrelnet
+from .cvfishnet import cvfishnet
 
 def cvglmnet(*, x, \
              y, \

@@ -234,14 +234,14 @@ SEE ALSO:
 """
 
 # import packages/methods
-from glmnetSet import glmnetSet
-from glmnetControl import glmnetControl
+from .glmnetSet import glmnetSet
+from .glmnetControl import glmnetControl
 import scipy
-from elnet import elnet
-from lognet import lognet
-from coxnet import coxnet
-from mrelnet import mrelnet
-from fishnet import fishnet
+from .elnet import elnet
+from .lognet import lognet
+from .coxnet import coxnet
+from .mrelnet import mrelnet
+from .fishnet import fishnet
 
 def glmnet(*, x, y, family='gaussian', **options):
         

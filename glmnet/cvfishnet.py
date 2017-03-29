@@ -4,11 +4,11 @@ Internal cvglmnet function. See also cvglmnet.
 
 """
 import scipy
-from glmnetPredict import glmnetPredict
-from wtmean import wtmean
-from cvcompute import cvcompute
+from .glmnetPredict import glmnetPredict
+from .wtmean import wtmean
+from .cvcompute import cvcompute
 
-def cvelnet(fit, \
+def cvfishnet(fit, \
             lambdau, \
             x, \
             y, \
@@ -19,17 +19,20 @@ def cvelnet(fit, \
             grouped, \
             keep = False):
     
-    typenames = {'deviance':'Mean-Squared Error', 'mse':'Mean-Squared Error', 
+    typenames = {'deviance':'Poisson Deviance', 'mse':'Mean-Squared Error', 
                  'mae':'Mean Absolute Error'}
     if ptype == 'default':
-        ptype = 'mse'
+        ptype = 'deviance'
 
     ptypeList = ['mse', 'mae', 'deviance']    
     if not ptype in ptypeList:
-        print('Warning: only ', ptypeList, 'available for Gaussian models; ''mse'' used')
-        ptype = 'mse'
+        print('Warning: only ', ptypeList, 'available for Poisson models; ''deviance'' used')
+        ptype = 'deviance'
+        
     if len(offset) > 0:
-        y = y - offset
+        is_offset = True
+    else:
+        is_offset = False 
 
     predmat = scipy.ones([y.size, lambdau.size])*scipy.NAN               
     nfolds = scipy.amax(foldid) + 1
@@ -37,8 +40,11 @@ def cvelnet(fit, \
     for i in range(nfolds):
         which = foldid == i
         fitobj = fit[i].copy()
-        fitobj['offset'] = False
-        preds = glmnetPredict(fitobj, x[which, ])
+        if is_offset:
+            off_sub = offset[which]
+        else:
+            off_sub = scipy.empty([0])
+        preds = glmnetPredict(fitobj, x[which, ], offset = off_sub)
         nlami = scipy.size(fit[i]['lambdau'])
         predmat[which, 0:nlami] = preds
         nlams.append(nlami)
@@ -51,12 +57,12 @@ def cvelnet(fit, \
     if ptype == 'mse':
         cvraw = (yy - predmat)**2
     elif ptype == 'deviance':
-        cvraw = (yy - predmat)**2
+        cvraw = devi(yy, predmat)
     elif ptype == 'mae':
         cvraw = scipy.absolute(yy - predmat)
         
     if y.size/nfolds < 3 and grouped == True:
-        print('Option grouped=false enforced in cv.glmnet, since < 3 observations per fold')
+        print('Option grouped=false enforced in cvglmnet, since < 3 observations per fold')
         grouped = False
         
     if grouped == True:
@@ -79,5 +85,15 @@ def cvelnet(fit, \
         
     return(result)
 
-# end of cvelnet
+# end of cvfishnet
 #=========================    
+def devi(yy, eta):
+    deveta = yy*eta - scipy.exp(eta)
+    devy = yy*scipy.log(yy) - yy
+    devy[yy == 0] = 0
+    result = 2*(devy - deveta)
+    return(result)
+    
+
+
+

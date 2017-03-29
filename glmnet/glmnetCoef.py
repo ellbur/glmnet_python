@@ -69,7 +69,7 @@
 """
 
 import scipy
-from glmnetPredict import glmnetPredict
+from .glmnetPredict import glmnetPredict
 
 def glmnetCoef(obj, s = None, exact = False):
     

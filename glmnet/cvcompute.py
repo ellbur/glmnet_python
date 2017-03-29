@@ -5,7 +5,7 @@ Internal glmnet function. See also cvglmnet.
 Compute the weighted mean and SD within folds, and hence the SE of the mean
 """
 import scipy
-from wtmean import wtmean
+from .wtmean import wtmean
 
 def cvcompute(mat, weights, foldid, nlams):
     if len(weights.shape) > 1:

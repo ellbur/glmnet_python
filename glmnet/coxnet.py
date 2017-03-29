@@ -8,7 +8,7 @@ status -- column 1
 # import packages/methods
 import scipy
 import ctypes
-from loadGlmLib import loadGlmLib
+from .loadGlmLib import loadGlmLib
     
 def coxnet(x, is_sparse, irs, pcs, y, weights, offset, parm,
           nobs, nvars, jd, vp, cl, ne, nx, nlam, flmin, ulam, 
