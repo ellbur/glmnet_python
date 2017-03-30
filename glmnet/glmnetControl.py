@@ -93,7 +93,7 @@ def glmnetControl(pars = None):
     if len(parsInIvals) > 0:          # assert 'opts' keys are subsets of 'options' keys
         raise ValueError('attempting to set glmnet controls that are not known to glmnetControl')
     else:        
-        ivals = {**ivals, **pars}   # update values
+        ivals.update(pars)            # update values
     
     return ivals
 

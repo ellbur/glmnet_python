@@ -205,7 +205,7 @@ from .cvmultnet import cvmultnet
 from .cvmrelnet import cvmrelnet
 from .cvfishnet import cvfishnet
 
-def cvglmnet(*, x, \
+def cvglmnet(x, \
              y, \
              family = 'gaussian', \
              ptype = 'default', \

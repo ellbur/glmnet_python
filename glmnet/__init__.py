@@ -243,7 +243,7 @@ from .coxnet import coxnet
 from .mrelnet import mrelnet
 from .fishnet import fishnet
 
-def glmnet(*, x, y, family='gaussian', **options):
+def glmnet(x, y, family='gaussian', **options):
         
     # check inputs: make sure x and y are scipy, float64 arrays
     # fortran order is not checked as we force a convert later 
